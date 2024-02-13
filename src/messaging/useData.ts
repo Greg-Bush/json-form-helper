@@ -20,10 +20,12 @@ export default function useData<T extends keyof Requests>(type: T) {
         }
     }, [type]);
 
-    useEffect(() => {
+    const refetch = useCallback(() => {
         // @ts-ignore
         send(null)
     }, [send])
+
+    useEffect(refetch, [refetch])
 
     return { send, result, loading, error };
 }

@@ -29,7 +29,7 @@ export default function UploadJsonFileButton(props: {
         }
     })
     return (
-        <Button onClick={openFilePicker} component="label" variant="contained" endIcon={loading || props.loading ? <Downloading /> : <CloudUpload />}>
+        <Button disabled={loading} onClick={openFilePicker} component="label" variant="contained" endIcon={loading || props.loading ? <Downloading /> : <CloudUpload />}>
             {plainFiles.length || props.hasSelected ? "Change file" : "Upload file"}
         </Button>
     )

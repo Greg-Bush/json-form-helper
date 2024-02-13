@@ -1,24 +1,16 @@
 import { ExtensionMessage, Message } from '@webext-core/messaging';
+import { localExtStorage } from '@webext-core/storage';
+import isNil from 'lodash.isnil';
 import { Requests, onMessage } from '../messaging';
-import store from './store';
-import { State, Type } from './types';
+import { Type } from './types';
 
-function handler<T extends Type>(message: Message<Requests, T> & ExtensionMessage) {
+async function handler<T extends Type>(message: Message<Requests, T> & ExtensionMessage) {
     const { data, type } = message
-    if (data !== null) {
-        store.dispatch({ type: message.type, payload: message.data })
+    if (!isNil(data)) {
+        await localExtStorage.setItem(message.type, data)
     }
-    const state = store.getState() as State
-    return state[type]
+    return await localExtStorage.getItem(type);
 }
 
 onMessage('resume', handler)
 onMessage('error', handler)
-
-onMessage('rehydrated', message => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(true as const)
-        }, 1500)
-    })
-})

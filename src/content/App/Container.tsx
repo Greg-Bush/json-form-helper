@@ -10,21 +10,18 @@ export default function Container() {
     useEffect(() => {
         const body = document.getElementsByTagName('body')[0]
         body.onclick = () => {
-            console.log('body click')
             const { activeElement } = document
             if (!activeElement) {
                 return
             }
             const elementName = activeElement.tagName.toLowerCase()
             if (elementName === 'input' || elementName === 'textarea') {
-                console.log(activeElement)
                 setActiveElement(activeElement)
             }
         }
     }, [])
 
     useHotkeys('j', () => {
-        console.log('KEY PRESSED')
         setOpen(o => !o)
     })
 
@@ -49,7 +46,10 @@ export default function Container() {
     }), [open])
     return (
         <div style={style}>
-            <TreeSelect onLeafClick={onLeafClick} />
+            {
+                open ?
+                    <TreeSelect onLeafClick={onLeafClick} /> : null
+            }
         </div>
     )
 }

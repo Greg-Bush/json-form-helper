@@ -9,8 +9,6 @@ export interface RequestsMap {
 
 export type Requests = {
     [key in Types]: (data: RequestsMap[key] | undefined) => RequestsMap[key];
-} & {
-    rehydrated(): true;
 }
 
 export const { sendMessage, onMessage } = defineExtensionMessaging<Requests>();

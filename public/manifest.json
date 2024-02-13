@@ -12,7 +12,7 @@
       "48": "logo48.png",
       "128": "logo192.png"
   },
-  "permissions": ["activeTab"],
+  "permissions": ["activeTab", "storage"],
   "content_scripts": [
     {
       "matches":["<all_urls>"],
